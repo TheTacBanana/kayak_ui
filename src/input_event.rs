@@ -1,22 +1,14 @@
-use bevy::prelude::KeyCode;
+use bevy::prelude::{KeyCode, MouseButton};
 
 /// Events sent to [`KayakContext`](crate::KayakContext) containing user input data
 #[derive(Debug, PartialEq)]
 pub enum InputEvent {
     /// An event that occurs when the user moves the mouse
     MouseMoved((f32, f32)),
-    /// An event that occurs when the user presses the left mouse button
-    MouseLeftPress,
-    /// An event that occurs when the user releases the left mouse button
-    MouseLeftRelease,
-    /// An event that occurs when the user presses the right mouse button
-    MouseRightPress,
-    /// An event that occurs when the user releases the right mouse button
-    MouseRightRelease,
-    /// An event that occurs when the user presses the right mouse button
-    MouseMiddlePress,
-    /// An event that occurs when the user presses the right mouse button
-    MouseMiddleRelease,
+    /// An event that occurs when the user presses the a mouse button
+    MousePress(MouseButton),
+    /// An event that occurs when the user releases the a mouse button
+    MouseRelease(MouseButton),
     /// An event that occurs when the user scrolls
     Scroll { dx: f32, dy: f32, is_line: bool },
     /// An event that occurs when the user types in a character
@@ -40,12 +32,8 @@ impl InputEvent {
         match self {
             // Mouse events
             Self::MouseMoved(..) => InputEventCategory::Mouse,
-            Self::MouseLeftPress => InputEventCategory::Mouse,
-            Self::MouseLeftRelease => InputEventCategory::Mouse,
-            Self::MouseRightPress => InputEventCategory::Mouse,
-            Self::MouseRightRelease => InputEventCategory::Mouse,
-            Self::MouseMiddlePress => InputEventCategory::Mouse,
-            Self::MouseMiddleRelease => InputEventCategory::Mouse,
+            Self::MousePress(..) => InputEventCategory::Mouse,
+            Self::MouseRelease(..) => InputEventCategory::Mouse,
             Self::Scroll { .. } => InputEventCategory::Mouse,
             // Keyboard events
             Self::CharEvent { .. } => InputEventCategory::Keyboard,
